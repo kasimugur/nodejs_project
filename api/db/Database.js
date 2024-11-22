@@ -1,5 +1,4 @@
-const mongosse = require("mongoose");
-
+const mongoose = require("mongoose");
 let instance = null
 
 class Database {
@@ -8,6 +7,7 @@ class Database {
     if (!instance) {
       this.mongoConnection = null;
       instance = this;
+      console.log("Database instance created");
     }
 
     return instance;
@@ -16,13 +16,13 @@ class Database {
   async connect(options) {
 
     try {
-      console.log('DB Connecting...');
-      let db = await mongosse.connect(options.CONNECTION_STRING);
+      console.log("Trying to connect to DB...");
+      let db = await mongoose.connect(options.CONNECTION_STRING);
 
       this.mongoConnection = db;
-      console.log('DB Connected.');
+      console.log("DB Connected successfully!");
     } catch (err) {
-      console.error(err);
+      console.error( "DB Connection Error",err.message);
       process.exit(1);
     }
 
